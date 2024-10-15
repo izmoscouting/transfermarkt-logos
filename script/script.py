@@ -15,7 +15,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 #Chargement du dataframe
-df = pd.read_excel('../files/teams/FBREF_Team_normalized_stats.xlsx')
+df = pd.read_excel('../files/teams/FBREF_Team_raw_stats.xlsx')
 
 for x in df.values:
     
