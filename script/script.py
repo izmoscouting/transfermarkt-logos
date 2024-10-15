@@ -2,6 +2,7 @@ import requests
 
 import pandas as pd
 
+import json
 
 import time
 
@@ -13,10 +14,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-#Ouverture du dataframe
-df = pd.read_excel('../files/teams/FBREF_Team_raw_stats.xlsx')
-
+#Chargement du dataframe
+df = pd.read_excel('../files/teams/FBREF_Team_normalized_stats.xlsx')
 
 for x in df.values:
     
@@ -33,6 +32,8 @@ for x in df.values:
         continue
     elif x[114] == 'St.Louis City':
         driver.get(f'https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Louis City')
+    elif x[114] == 'U.C Sampdoria':
+        driver.get(f'https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sampdoria')
         
     elif x[114] == 'VfL Bochum 1848':
         driver.get(f'https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Vfl Bochum')
@@ -97,8 +98,8 @@ for x in df.values:
     #Récupérer le logo de l'équipe depuis sa page transfermarkt
 
     try:
-        photo = WebDriverWait(driver, uniform(3,5)).until(
-        EC.presence_of_element_located((By.XPATH, '//*[@id="tm-main"]/header/div[4]/img'))) 
+        photo = WebDriverWait(driver, 25).until(
+        EC.visibility_of_element_located((By.XPATH, '//*[@id="tm-main"]/header/div[4]/img'))) 
         driver.execute_script("window.stop();")
         src = photo.get_attribute('src')
         driver.quit()
